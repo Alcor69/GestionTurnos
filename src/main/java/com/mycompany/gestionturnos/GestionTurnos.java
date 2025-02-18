@@ -4,6 +4,8 @@
 
 package com.mycompany.gestionturnos;
 
+import View.VentanaPrincipal;
+
 /**
  *
  * @author rb940
@@ -11,6 +13,7 @@ package com.mycompany.gestionturnos;
 public class GestionTurnos {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        VentanaPrincipal v = new VentanaPrincipal();
+        v.setVisible(true);
     }
 }
