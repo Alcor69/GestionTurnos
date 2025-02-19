@@ -4,6 +4,11 @@
  */
 package View;
 
+import Controller.ControladorPaciente;
+import Controller.ControladorTurno;
+import Model.Paciente;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,20 +17,19 @@ import javax.swing.table.DefaultTableModel;
  * @author rb940
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-
-    /**
-     * Creates new form VentanaPrincipal
-     */
-    DefaultTableModel model;
-
+DefaultTableModel model;
+    ControladorPaciente controladorPaciente;
+    ControladorTurno controladorTurno;
 
     public VentanaPrincipal() {
         initComponents();
+        controladorPaciente = new ControladorPaciente();
+        controladorTurno = new ControladorTurno();
         model = new DefaultTableModel(
             new Object[][] {},
-            new String[] {"Nombre", "Edad", "Identificación", "Estado"}
+            new String[] {"Nombre", "Edad", "Identificación", "Estado", "Fecha"}
         );
-        jTable1.setModel(model); 
+        jTable1.setModel(model);
     }
 
     
@@ -52,6 +56,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,10 +118,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel9.setText("Retirar turno");
 
-        jButton5.setText("jButton5");
+        jButton5.setText("Retirar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Ingrese el nombre del paciente a buscar");
+
+        jButton6.setText("Buscar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
             }
         });
 
@@ -148,8 +164,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                                         .addComponent(jButton3)))
                                 .addGap(114, 114, 114)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jButton4)))
+                                    .addComponent(jButton4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addGap(125, 125, 125)
+                                        .addComponent(jButton6))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -158,21 +177,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                                         .addComponent(jButton1)))
                                 .addGap(111, 111, 111)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2)
-                                    .addComponent(jLabel6)))))
+                                    .addComponent(jLabel6)
+                                    .addComponent(jButton2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton5)
                             .addComponent(jLabel9))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(jLabel3)
@@ -196,22 +218,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jButton1)
                                     .addComponent(jButton2))
-                                .addGap(43, 43, 43)
+                                .addGap(40, 40, 40)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
+                                    .addComponent(jLabel8)
+                                    .addComponent(jButton6))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton3)
                                     .addComponent(jButton4)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(200, 200, 200)
                                 .addComponent(jLabel9))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
                 .addContainerGap(21, Short.MAX_VALUE))
@@ -225,16 +252,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         String edad = jTextField2.getText();
         String identificacion = jTextField3.getText();
         
+        // Validar campos
         if (nombre.isEmpty() || edad.isEmpty() || identificacion.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor complete todos los campos.");
-        } else {
-            model.addRow(new Object[]{nombre, edad, identificacion, "No asignado"});  
-            
-// Limpiar campos
-            jTextField1.setText("");
-            jTextField2.setText("");
-            jTextField3.setText("");
-        }    
+            return;
+        }
+
+        // Crear un nuevo paciente
+        Paciente paciente = new Paciente(nombre, WIDTH, identificacion);
+        
+        // Registrar paciente en el controlador
+        controladorPaciente.registrarPaciente(paciente);
+
+        // Obtener la fecha actual
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fecha = currentDate.format(formatter);
+
+        // Añadir paciente a la tabla
+        model.addRow(new Object[]{nombre, edad, identificacion, "No asignado", fecha});
+
+        // Limpiar campos
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+                   
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -269,27 +311,51 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             jTextField1.setText(nombre);
             jTextField2.setText(edad);
             jTextField3.setText(identificacion);
-            
         } else {
             JOptionPane.showMessageDialog(this, "Por favor seleccione un paciente.");
         }  // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-    int selectedRow = jTable1.getSelectedRow();
-    if (selectedRow != -1) {
-        String estadoActual = (String) jTable1.getValueAt(selectedRow, 3);
-        
-        if ("Turno Asignado".equals(estadoActual)) {
-            // Cambiar estado a "Turno Retirado"
-            jTable1.setValueAt("Turno Retirado", selectedRow, 3);
+     int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            String estadoActual = (String) jTable1.getValueAt(selectedRow, 3);
+            
+            if ("Turno Asignado".equals(estadoActual)) {
+                jTable1.setValueAt("Turno Retirado", selectedRow, 3);
+            } else {
+                JOptionPane.showMessageDialog(this, "El turno no ha sido asignado o ya ha sido retirado.");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "El turno no ha sido asignado o ya ha sido retirado.");
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "Por favor seleccione un paciente.");
-    }    // TODO add your handling code here:
+            JOptionPane.showMessageDialog(this, "Por favor seleccione un paciente.");
+        }    // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    String nombreBusqueda = jTextField4.getText();
+    
+    if (nombreBusqueda.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre para buscar.");
+        return;
+    }
+
+    boolean encontrado = false;
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String nombre = (String) model.getValueAt(i, 0);
+        if (nombre.equalsIgnoreCase(nombreBusqueda)) {
+            jTable1.setRowSelectionInterval(i, i); // Selecciona la fila del paciente encontrado
+            encontrado = true;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        JOptionPane.showMessageDialog(this, "Paciente no encontrado.");
+    }else{
+     jTextField1.setText("");
+     jTextField2.setText("");
+     jTextField3.setText("");}   // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -332,7 +398,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -346,5 +414,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }
